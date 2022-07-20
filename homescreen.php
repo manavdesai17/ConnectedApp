@@ -23,9 +23,9 @@
 <?php session_start();
     include("connection.php");
      //establishing connection betweent register.php and connection.php
-     include("message.php")
+     //include("message.php")
     if(isset($_POST['start'])){
-        $new_msg = message();
+        //$new_msg = message();
         $userName = $_POST['user_name'];  // Storing the entered user name into a variable
         if ($userName!= ""){ //checking if the text box is not null
             $query = "INSERT INTO user (id,user_name)
