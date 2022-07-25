@@ -41,7 +41,7 @@
                     $user = new User($userName);
                     $new_msg = new Message($userName);
                     $_SESSION['user_name'] = $user->get_userName(); // making the entered username by the user into a session variable
-                    header('Location: chat_area.php'); //redirect user to the chat page
+                    header('Location: chat_rooms.php'); //redirect user to the chat page
                     exit();
                 } else {
                     print 'not logged in because of ' . $query;
@@ -59,10 +59,10 @@
 <div id = "main">
 <h2 align = "center"> Enter Your Name! </h2>
 <form method = "post">
-User Name: <br>
-<input type = "text" name = "user_name" placeholder="User Name">
-<br><br>
-<input type="submit" name = "start" value = "Start">
+    User Name: <br>
+    <input type = "text" name = "user_name" placeholder="User Name">
+    <br><br>
+    <input type="submit" name = "start" value = "Start">
 </form>
 </div>
 </body>
