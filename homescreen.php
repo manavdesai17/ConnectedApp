@@ -31,15 +31,16 @@
          //include("message.php")
         if(isset($_POST['start'])) {
             require_once('message.php');
+            require_once('user.php');
             $userName = $_POST['user_name'];  // Storing the entered user name into a variable
-            $new_msg = new Message($userName);
             if ($userName !== ""){ //checking if the text box is not null
                 $query = "INSERT INTO user (id, user_name)
                             VALUES(0,'".$userName."')"; //inserting the username and the id of the user into the database
                 
                 if (mysqli_query($con,$query)){
-                    $_SESSION['user_name'] = $new_msg->userName; // making the entered username by the user into a session variable
-                    // echo "what is love baby dont hurt me";
+                    $user = new User($userName);
+                    $new_msg = new Message($userName);
+                    $_SESSION['user_name'] = $user->get_userName(); // making the entered username by the user into a session variable
                     header('Location: chat_area.php'); //redirect user to the chat page
                     exit();
                 } else {
