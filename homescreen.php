@@ -19,30 +19,37 @@
 </head>
 
 <body>
-
-<?php session_start();
-    include("connection.php");
-     //establishing connection betweent register.php and connection.php
-     //include("message.php")
-    if(isset($_POST['start'])){
-        //$new_msg = message();
-        $userName = $_POST['user_name'];  // Storing the entered user name into a variable
-        if ($userName!= ""){ //checking if the text box is not null
-            $query = "INSERT INTO user (id,user_name)
-                        VALUES('','".$userName."')"; //inserting the username and the id of the user into the database
-            
-            if (mysqli_query($con,$query)){
-                $_SESSION['user_name'] = $new_msg->userName; // making the entered username by the user into a session variable
-                echo "what is love baby dont hurt me";
-                header("location: chat_area.php"); //redirect user to the chat page
+<?php 
+    include($_SERVER['DOCUMENT_ROOT'] . '/connection.php'); // check database connection
+    session_start();
+    if (isset($_SESSION['user_name'])) {
+        header('Location: chat_area.php');
+    }
+    else {
+        include("connection.php");
+         //establishing connection betweent register.php and connection.php
+         //include("message.php")
+        if(isset($_POST['start'])) {
+            require_once('message.php');
+            $userName = $_POST['user_name'];  // Storing the entered user name into a variable
+            $new_msg = new Message($userName);
+            if ($userName !== ""){ //checking if the text box is not null
+                $query = "INSERT INTO user (id, user_name)
+                            VALUES(0,'".$userName."')"; //inserting the username and the id of the user into the database
                 
-                
-            } else {
-                print 'not logged in because of ' . $query;
+                if (mysqli_query($con,$query)){
+                    $_SESSION['user_name'] = $new_msg->userName; // making the entered username by the user into a session variable
+                    // echo "what is love baby dont hurt me";
+                    header('Location: chat_area.php'); //redirect user to the chat page
+                    exit();
+                } else {
+                    print 'not logged in because of ' . $query;
+                }
+               
+            } 
+            else { //if it is empty then, the program prompts the user to add in the username
+                print 'Please enter your username' ;
             }
-           
-        } else { //if it is empty then, the program prompts the user to add in the username
-            print 'Please enter your username' ;
         }
     }
 

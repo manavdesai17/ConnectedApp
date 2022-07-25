@@ -1,3 +1,3 @@
 <?php
-header("homescreen.php");
+    header('Location: homescreen.php', true);
 ?>
