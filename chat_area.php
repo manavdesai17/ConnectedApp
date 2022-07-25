@@ -28,6 +28,8 @@
 //print('I come to this page lOL');
 // if you want to make changes please feel free
     session_start();
+    $_SESSION['messages'] = array();
+    $_SESSION['messages_length'] = 0;
     if (isset($_SESSION['user_name'])){ //if the session is runnning
         echo '<h2>Welcome to the chat ' . $_SESSION['user_name'] . '! </h2>
             <form method="post">
@@ -69,6 +71,10 @@
         <script>
             // Loads file containng log.html to print contents
             function loadLog() {
+                $.ajax({
+                    url: "log.php",
+                    cache: false,
+                });
                 $.ajax({
                     url: "log.html",
                     cache: false,
