@@ -1,0 +1,3 @@
+<?php
+header("homescreen.php");
+?>

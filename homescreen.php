@@ -33,7 +33,9 @@
             
             if (mysqli_query($con,$query)){
                 $_SESSION['user_name'] = $new_msg->userName; // making the entered username by the user into a session variable
-                header("location:chat_area.php"); //redirect user to the chat page
+                echo "what is love baby dont hurt me";
+                header("location: chat_area.php"); //redirect user to the chat page
+                
                 
             } else {
                 print 'not logged in because of ' . $query;
