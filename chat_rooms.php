@@ -5,6 +5,7 @@
 <?php
 session_start();
 include("connection.php");
+require_once('room.php');
 
 if (isset($_SESSION['user_name'])){ //if the session is runnning
     echo '<h2>Welcome to the chat room selection ' . $_SESSION['user_name'] . '! </h2>
@@ -28,7 +29,7 @@ $store = mysqli_query($con, $queryDisplay); //storing the query in the $store va
 while($rows = mysqli_fetch_assoc($store)){ // looping through each row of the table
     $chat_room_name = $rows['room_name']; 
     if (!in_array($chat_room_name, $chat_rooms)){
-        array_push($chat_rooms, $chat_room_name);
+        array_push($chat_rooms, new ChatRoom($chat_room_name));
     }
 }
 
@@ -38,7 +39,7 @@ while($rows = mysqli_fetch_assoc($store)){ // looping through each row of the ta
     <?php 
     // Select a chat room
     foreach ($chat_rooms as $room) {
-        echo "<button type='submit' name='room_name' value='" . $room . "'>" . $room .  "</button>";
+        echo "<button type='submit' name='room_name' value='" . $room->get_roomName() . "'>" . $room->get_roomName() .  "</button>";
     }
     ?>
 </form>

@@ -59,11 +59,9 @@
     <img src="logo.png" alt="logo" width="200" height="200">
 </div>
 <?php
-    
     session_start();
     include("connection.php");
-    
-    $_SESSION['current_chat_room'] = $_POST['room_name'];
+    if (isset($_POST['room_name'])) { $_SESSION['current_chat_room'] = $_POST['room_name']; }
     $_SESSION['messages'] = array();
     $_SESSION['messages_length'] = 0;
     if (isset($_SESSION['user_name'])){ //if the session is runnning
@@ -90,8 +88,23 @@
     }
 ?>
 <div>
+    <?php 
+    include('connection.php');
+    
+    if (array_key_exists('change_username', $_POST)) {
+        $updateUsernameQuery = "UPDATE test.user SET user_name = '". $_POST['user_name'] ."' WHERE user_name = '" . $_SESSION['user_name'] . "'";
+        if (mysqli_query($con, $updateUsernameQuery)) {
+            $_SESSION['user_name'] = $_POST['user_name'];
+            header("Refresh:0");
+        }
+        else {
+            echo "Could not change username.";
+        }
+    }    
+    ?>
     <form method="post">
-        <button type="submit">Change Username</button>
+        <input type = "text" name = "user_name" placeholder="User Name">
+        <button type="submit" value="" name="change_username">Change Username</button>
     </form>
 </div>
 <div id = "main">
