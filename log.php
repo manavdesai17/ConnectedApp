@@ -1,11 +1,11 @@
 <?php 
-    session_start();
-    include("connection.php");
-    $message_holder = array();
-    $queryDisplay = "SELECT * FROM test.message WHERE room_name = '" . $_SESSION['current_chat_room'] . "'";   // selecting everything from the database
-    $store = mysqli_query($con, $queryDisplay); //storing the query in the $store variable
-    // displaying all the old messages
-    if ($store){
+session_start();
+include("connection.php");
+$message_holder = array();
+$queryDisplay = "SELECT * FROM test.message WHERE room_name = '" . $_SESSION['current_chat_room'] . "'";   // selecting everything from the database
+$store = mysqli_query($con, $queryDisplay); //storing the query in the $store variable
+// displaying all the old messages
+if ($store){
     if (mysqli_query($con, $queryDisplay)->num_rows > $_SESSION['messages_length']){ 
         if (file_exists($_SESSION['current_chat_room'] . ".html")) {
             $fp = fopen($_SESSION['current_chat_room'] . ".html", 'r+');

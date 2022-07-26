@@ -35,19 +35,28 @@
             require_once('user.php');
             $userName = $_POST['user_name'];  // Storing the entered user name into a variable
             if ($userName !== ""){ //checking if the text box is not null
-                $query = "INSERT INTO user (id, user_name)
-                            VALUES(0,'".$userName."')"; //inserting the username and the id of the user into the database
-                
-                if (mysqli_query($con,$query)){
+                $check = "SELECT * FROM user WHERE user_name = '" . $userName . "'";
+                if (mysqli_query($con, $check)->num_rows >= 1){
                     $user = new User($userName);
                     $new_msg = new Message($userName);
                     $_SESSION['user_name'] = $user->get_userName(); // making the entered username by the user into a session variable
-                    header('Location: chat_rooms.php'); //redirect user to the chat page
+                    header('Location: chat_rooms.php');
                     exit();
-                } else {
-                    print 'not logged in because of ' . $query;
                 }
-               
+                else {
+                    $query = "INSERT INTO user (id, user_name)
+                                VALUES(0,'".$userName."')"; //inserting the username and the id of the user into the database
+                    
+                    if (mysqli_query($con,$query)){
+                        $user = new User($userName);
+                        $new_msg = new Message($userName);
+                        $_SESSION['user_name'] = $user->get_userName(); // making the entered username by the user into a session variable
+                        header('Location: chat_rooms.php'); //redirect user to the chat page
+                        exit();
+                    } else {
+                        print 'not logged in because of ' . $query;
+                    }
+                }
             } 
             else { //if it is empty then, the program prompts the user to add in the username
                 print 'Please enter your username' ;
