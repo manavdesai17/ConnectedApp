@@ -61,7 +61,6 @@
 <?php
     session_start();
     include("connection.php");
-    if (isset($_POST['room_name'])) { $_SESSION['current_chat_room'] = $_POST['room_name']; }
     $_SESSION['messages'] = array();
     $_SESSION['messages_length'] = 0;
     if (isset($_SESSION['user_name'])){ //if the session is runnning
@@ -71,20 +70,21 @@
                 <input type="submit" name="exitChat" class="button" value="Exit '. $_SESSION['current_chat_room'] .'" />
             </form>';
 
-        $incrementQuery = "UPDATE test.chat_rooms SET room_amount = room_amount + 1 WHERE room_name = '" .$_SESSION['current_chat_room']. "'";
+        $incrementQuery = "UPDATE test.chat_rooms SET room_active = 1 WHERE room_name = '" .$_SESSION['current_chat_room']. "'";
         mysqli_query($con,$incrementQuery);
         if (array_key_exists('exitChat', $_POST)) { 
-            exitChat(trim($_POST['exitChat'], "Exit ")); 
+            exitChat(); 
         }
     } else {  //if the session is not running then the user is directed to the homescreen
         header("Location: homescreen.php");
     }
 
-    function exitChat($room) {
+    function exitChat() {
         include('connection.php');
-        $decrementQuery = "UPDATE test.chat_rooms SET room_amount = room_amount - 1 WHERE room_name = '" .$room. "' AND room_amount > 0";
-        mysqli_query($con, $decrementQuery);
-        header("Location: chat_rooms.php");
+        $decrementQuery = "UPDATE test.chat_rooms SET room_active = 0 WHERE room_name = '" .$_SESSION['current_chat_room']. "'";
+        if (mysqli_query($con, $decrementQuery)) {
+            header("Location: chat_rooms.php");
+        }
     }
 ?>
 <div>

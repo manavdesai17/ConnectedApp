@@ -32,10 +32,9 @@ while($rows = mysqli_fetch_assoc($store)){ // looping through each row of the ta
         array_push($chat_rooms, new ChatRoom($chat_room_name));
     }
 }
-
 ?>
 
-<form method="post" action="chat_area.php">
+<form method="post">
     <?php 
     // Select a chat room
     foreach ($chat_rooms as $room) {
@@ -43,6 +42,13 @@ while($rows = mysqli_fetch_assoc($store)){ // looping through each row of the ta
     }
     ?>
 </form>
+
+<?php 
+if (array_key_exists('room_name', $_POST)) {
+    $_SESSION['current_chat_room'] = $_POST['room_name'];
+    header('Location: chat_area.php');
+}
+?>
 
 </body>
 </html>
