@@ -76,6 +76,11 @@
         header("Location: chat_rooms.php");
     }
 ?>
+<div>
+    <form method="post">
+        <button type="submit">Change Username</button>
+    </form>
+</div>
 <div id = "main">
     <div id = "msgArea">        
         <script>
@@ -93,8 +98,8 @@
     </div>
     
     <form method= "post">
-    <input type = "text" name = "message_typed" style= "width: 300px; height: 50px;" id = "usermsg" placeholder = "Your message goes here!" />
-    <input type = "submit" name = "submit" style = "width: 80px; height: 50px; " value = "Send" id="submitmsg"/>
+        <input type = "text" name = "message_typed" style= "width: 300px; height: 50px;" id = "usermsg" placeholder = "Your message goes here!" />
+        <input type = "submit" name = "submit" style = "width: 80px; height: 50px; " value = "Send" id="submitmsg"/>
     </form>
     <script>
         // Action when submitting message
