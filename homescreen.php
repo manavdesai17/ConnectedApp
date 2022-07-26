@@ -33,7 +33,7 @@
         if(isset($_POST['start'])) {
             require_once('message.php');
             require_once('user.php');
-            $userName = $_POST['user_name'];  // Storing the entered user name into a variable
+            $userName = stripslashes(htmlspecialchars($_POST['user_name']));  // Storing the entered user name into a variable
             if ($userName !== ""){ //checking if the text box is not null
                 $check = "SELECT * FROM user WHERE user_name = '" . $userName . "'";
                 if (mysqli_query($con, $check)->num_rows >= 1){

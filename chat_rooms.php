@@ -45,7 +45,7 @@ while($rows = mysqli_fetch_assoc($store)){ // looping through each row of the ta
 
 <?php 
 if (array_key_exists('room_name', $_POST)) {
-    $_SESSION['current_chat_room'] = $_POST['room_name'];
+    $_SESSION['current_chat_room'] = stripslashes(htmlspecialchars($_POST['room_name']));
     header('Location: chat_area.php');
 }
 ?>

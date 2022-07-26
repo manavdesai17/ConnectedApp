@@ -3,7 +3,7 @@ session_start();
 include("connection.php");
 
 if(isset($_SESSION['user_name'])){
-    $message_text = $_POST['text']; //storing the input into the $message_text variable
+    $message_text = stripslashes(htmlspecialchars($_POST['text'])); //storing the input into the $message_text variable
 
     if ($message_text !== "") {
         $fp = fopen($_SESSION['current_chat_room'].".html", 'a');
