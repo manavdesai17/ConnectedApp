@@ -20,7 +20,8 @@
 
 <body>
 <?php 
-    include($_SERVER['DOCUMENT_ROOT'] . '/connection.php'); // check database connection
+    //include($_SERVER['DOCUMENT_ROOT'] . '/connection.php'); // check database connection
+    include("connection.php");
     session_start();
     if (isset($_SESSION['user_name'])) {
         header('Location: chat_area.php');

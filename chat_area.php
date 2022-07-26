@@ -59,15 +59,24 @@
     <img src="logo.png" alt="logo" width="200" height="200">
 </div>
 <?php
+    
     session_start();
+    include("connection.php");
+    
+    
     $_SESSION['current_chat_room'] = $_POST['room_name'];
     $_SESSION['messages'] = array();
     $_SESSION['messages_length'] = 0;
     if (isset($_SESSION['user_name'])){ //if the session is runnning
+        
         echo '<h2>Welcome to the chat ' . $_SESSION['user_name'] . ' in the '. $_SESSION['current_chat_room'] .' chat </h2>
             <form method="post">
                 <input type="submit" name="exitChat" class="button" value="Exit Chat" />
             </form>';
+        $Incrementquery = "UPDATE test.chat_rooms SET room_amount = room_amount + 1 WHERE room_name = a
+            VALUE('".$_POST['room_name']."')";
+
+        mysqli_query($con,$Incrementquery);
         if (array_key_exists('exitChat', $_POST)) { exitChat(); }
     } else {  //if the session is not running then the user is directed to the homescreen
         header("Location: homescreen.php");
@@ -75,6 +84,7 @@
     function exitChat() {
         header("Location: chat_rooms.php");
     }
+
 ?>
 <div>
     <form method="post">

@@ -18,7 +18,13 @@ else {  //if the session is not running then the user is directed to the homescr
 }
 
 function exitRooms() {
+    $Decrementquery = "UPDATE test.chat_rooms SET room_amount = room_amount + 1 WHERE room_name = a
+                        VALUE('".$_POST['room_name']."')";
+    
+    mysqli_query($con,$Decrementquery);
+    
     header("Location: homescreen.php");
+    
     session_destroy();
 }
 
